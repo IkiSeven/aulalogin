@@ -27,21 +27,22 @@ if (formNew) {
     }
     console.log(globalEmail);
     console.log(globalPass);
+    localStorage.setItem("getLogin", globalEmail);
+    localStorage.setItem("getPassword", globalPass);
+    
 });
 
 } else {
 //parte da pagina de login
+login_certo = localStorage.getItem("getLogin");
+senha_certa = localStorage.getItem("getPassword");
+
+console.log(login_certo);
+console.log(senha_certa);
 
   formLogin.addEventListener("submit", function(e){
     //localização
   e.preventDefault();  
-
-  console.log(globalEmail);
-  console.log(globalPass);
-
-  var login_certo = globalEmail;
-  var senha_certa = globalPass;
-
   
   var login = document.getElementById("emailFormLogin");
   var senha = document.getElementById("passFormLogin");
@@ -52,16 +53,19 @@ if (formNew) {
   //Localização H1
   var boasvindas = document.getElementById("welcome");
   
-  if (login_certo === getLogin && senha_certa === getSenha){
-    //boasvindas.innerHTML = "<div class='text-bg-success'>Login efetuado com sucesso.</div>";
-    alert("Logado");
-  }
-  
-  else{
-    //boasvindas.innerHTML = "<div class='text-bg-danger'>Senha incorreta.</div>";     
-    alert("Login errado");
-  }
-  
- 
+  if(getLogin && getSenha){
+     if (login_certo === getLogin && senha_certa === getSenha){
+        var modalSuccsess = new bootstrap.Modal(document.getElementById("resultModalSuccsess"));
+        modalSuccsess.show();
+     }
+      else{
+        var modalWrong = new bootstrap.Modal(document.getElementById("resultModalWrong"));
+        modalWrong.show();
+        }
+        }
+    else{
+      var modalError = new bootstrap.Modal(document.getElementById("resultModalError"));
+      modalError.show();
+    }
 });
 }
